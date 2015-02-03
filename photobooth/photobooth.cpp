@@ -18,6 +18,32 @@ const int BUTTON_LED_PIN = 4;
 
 
 // =======
+// Support
+// =======
+void lightLED(bool on, int pin, String name){
+    // Turn on or off an LED.
+    if (on) {
+        digitalWrite(pin, HIGH);
+        debugPrint(name + " LED on.");
+    }
+    else {
+        digitalWrite(pin, LOW);
+        debugPrint(name + " LED off.");
+    }
+}
+
+
+void lightButton(bool on) {
+    lightLED(on, BUTTON_LED_PIN, "Arcade button");
+}
+
+
+void lightSMD(bool on) {
+    lightLED(on, SMD_LED_PIN, "SMD");
+}
+
+
+// =======
 // Arduino
 // =======
 void setup() {
@@ -32,13 +58,11 @@ void setup() {
 
 
 void loop() {
-    digitalWrite(BUTTON_LED_PIN, HIGH);
-    digitalWrite(13, HIGH);
-    debugPrint("On");
+    lightButton(true);
+    lightSMD(true);
     delay(1000);
 
-    digitalWrite(BUTTON_LED_PIN, LOW);
-    digitalWrite(13, LOW);
-    debugPrint("Off");
+    lightButton(false);
+    lightSMD(false);
     delay(1000);
 }
