@@ -8,6 +8,7 @@
 // Trinket Pro pins off-limits: 2, 7
 const int SMD_LED_PIN = 13;
 const int BUTTON_LED_PIN = 4;
+const int BUTTON_PIN = 5;
 
 
 // =========
@@ -43,6 +44,19 @@ void lightSMD(bool on) {
 }
 
 
+bool isButtonPressed() {
+    int firstRead = digitalRead(BUTTON_PIN);
+    delay(10);
+    int secondRead = digitalRead(BUTTON_PIN) == HIGH ? true : false;
+
+    if (firstRead && secondRead) {
+        debugPrint("Button depressed.");
+    }
+
+    return firstRead && secondRead;
+}
+
+
 // =======
 // Arduino
 // =======
@@ -58,11 +72,13 @@ void setup() {
 
 
 void loop() {
-    lightButton(true);
-    lightSMD(true);
-    delay(1000);
+    if (isButtonPressed()) {
+        lightButton(true);
+        lightSMD(true);
+        delay(1000);
 
-    lightButton(false);
-    lightSMD(false);
-    delay(1000);
+        lightButton(false);
+        lightSMD(false);
+        delay(1000);
+    }
 }
