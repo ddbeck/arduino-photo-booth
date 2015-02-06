@@ -77,13 +77,14 @@ void setup() {
 
 
 void loop() {
-    if (isButtonPressed()) {
-        lightButton(true);
-        lightSMD(true);
-        delay(1000);
-
-        lightButton(false);
-        lightSMD(false);
-        delay(1000);
+    debugPrint("Begin wait for button press.");
+    while (true) {
+        if (isButtonPressed()) {
+            lightButton(false);
+            lightSMD(false);
+            delay(1000);
+            lightButton(true);
+            lightSMD(true);
+        }
     }
 }
