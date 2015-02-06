@@ -68,6 +68,11 @@ void setup() {
 
     // Pin modes
     pinMode(BUTTON_LED_PIN, OUTPUT);
+    pinMode(BUTTON_PIN, INPUT);
+
+    // LED states
+    lightButton(true);
+    lightSMD(true);
 }
 
 
