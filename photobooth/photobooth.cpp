@@ -45,9 +45,9 @@ void lightSMD(bool on) {
 
 
 bool isButtonPressed() {
-    int firstRead = digitalRead(BUTTON_PIN);
+    bool firstRead = digitalRead(BUTTON_PIN) == HIGH ? true : false;
     delay(10);
-    int secondRead = digitalRead(BUTTON_PIN) == HIGH ? true : false;
+    bool secondRead = digitalRead(BUTTON_PIN) == HIGH ? true : false;
 
     if (firstRead && secondRead) {
         debugPrint("Button depressed.");
