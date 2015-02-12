@@ -1,4 +1,7 @@
 #include <Arduino.h>
+#include <Adafruit_NeoPixel.h>
+#include <EasingLibrary.h>
+
 
 // ========
 // Settings
@@ -9,6 +12,23 @@
 const int SMD_LED_PIN = 13;
 const int BUTTON_LED_PIN = 4;
 const int BUTTON_PIN = 5;
+const int NEOPIXEL_PIN = 6;
+
+
+// ========
+// NeoPixel
+// ========
+const int NEOPIXEL_LENGTH = 16;
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(NEOPIXEL_LENGTH,
+                                            NEOPIXEL_PIN,
+                                            NEO_GRB + NEO_KHZ800);
+
+// --- Colors ---
+const uint32_t GREEN = strip.Color(0, 18, 0);
+const uint32_t YELLOW = strip.Color(18, 18, 0);
+const uint32_t RED = strip.Color(18, 0, 0);
+const uint32_t WHITE = strip.Color(18, 18, 18);
+const uint32_t OFF = strip.Color(0, 0, 0);
 
 
 // =========
@@ -44,6 +64,14 @@ void lightSMD(bool on) {
 }
 
 
+void setStrip(uint32_t color) {
+    for(int i = 0; i < strip.numPixels(); i++) {
+        strip.setPixelColor(i, color);
+    }
+    strip.show();
+}
+
+
 bool isButtonPressed() {
     bool firstRead = digitalRead(BUTTON_PIN) == HIGH ? true : false;
     delay(5);
@@ -54,6 +82,41 @@ bool isButtonPressed() {
     }
 
     return firstRead && secondRead;
+}
+
+
+void standby() {
+    int frequency = 10;
+    int startTime = millis();
+    int lastTime = startTime;
+    SineEase ease;
+
+    // The duration is half of the cycle (e.g., dark to light), so the full
+    // cycle (e.g. dark to light to dark again) takes twice as long.
+    ease.setDuration(2500); // half cycle in milliseconds
+
+    // The total change in position controls the maximum brightness of the
+    // NeoPixels. Because the NeoPixels have a range of 255 to 0, a total
+    // change in position less than about 1/3rd the total brightness makes the
+    // stops between values obvious as a sort of stutter in the animation.
+    ease.setTotalChangeInPosition(255/3);
+
+    double easedPosition;
+
+    while (true) {
+        if (millis() - lastTime > frequency) { // min change frequency is 10ms
+            lastTime = millis();
+            easedPosition = ease.easeInOut((double)(lastTime - startTime));
+            debugPrint(easedPosition);
+            setStrip(strip.Color(0, (int)easedPosition, 0));
+        }
+
+        if (isButtonPressed()) {
+            lightButton(false);
+            setStrip(OFF);
+            return;
+        }
+    }
 }
 
 
@@ -73,18 +136,16 @@ void setup() {
     // LED states
     lightButton(true);
     lightSMD(true);
+
+    // Neopixel
+    strip.begin();
+    strip.show();
+    setStrip(WHITE);
 }
 
 
 void loop() {
-    debugPrint("Begin wait for button press.");
-    while (true) {
-        if (isButtonPressed()) {
-            lightButton(false);
-            lightSMD(false);
-            delay(1000);
-            lightButton(true);
-            lightSMD(true);
-        }
-    }
+    lightButton(true);
+    standby();
+    delay(1000);
 }
