@@ -46,7 +46,7 @@ void lightSMD(bool on) {
 
 bool isButtonPressed() {
     bool firstRead = digitalRead(BUTTON_PIN) == HIGH ? true : false;
-    delay(10);
+    delay(5);
     bool secondRead = digitalRead(BUTTON_PIN) == HIGH ? true : false;
 
     if (firstRead && secondRead) {
