@@ -1,6 +1,16 @@
+// =========
+// Debugging
+// =========
+#define DEBUG
+
+
+// =====================
+// Headers and Libraries
+// =====================
 #include <Arduino.h>
 #include <Adafruit_NeoPixel.h>
 #include <EasingLibrary.h>
+#include "debug.h"
 
 
 // ========
@@ -29,13 +39,6 @@ const uint32_t YELLOW = strip.Color(18, 18, 0);
 const uint32_t RED = strip.Color(18, 0, 0);
 const uint32_t WHITE = strip.Color(18, 18, 18);
 const uint32_t OFF = strip.Color(0, 0, 0);
-
-
-// =========
-// Debugging
-// =========
-#define DEBUG
-#include <debug.h>
 
 
 // =======
