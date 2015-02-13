@@ -86,6 +86,8 @@ bool isButtonPressed() {
 
 
 void standby() {
+    debugPrint("Starting standby.");
+
     int frequency = 10;
     int startTime = millis();
     int lastTime = startTime;
@@ -107,13 +109,13 @@ void standby() {
         if (millis() - lastTime > frequency) { // min change frequency is 10ms
             lastTime = millis();
             easedPosition = ease.easeInOut((double)(lastTime - startTime));
-            debugPrint(easedPosition);
             setStrip(strip.Color(0, (int)easedPosition, 0));
         }
 
         if (isButtonPressed()) {
             lightButton(false);
             setStrip(OFF);
+            debugPrint("Exiting standby.");
             return;
         }
     }
