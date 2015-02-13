@@ -90,6 +90,7 @@ bool isButtonPressed() {
 
 void standby() {
     debugPrint("Starting standby.");
+    lightButton(true);
 
     int frequency = 10;
     int startTime = millis();
@@ -150,7 +151,6 @@ void setup() {
 
 
 void loop() {
-    lightButton(true);
     standby();
     delay(1000);
 }
