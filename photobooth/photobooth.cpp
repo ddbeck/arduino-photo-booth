@@ -20,7 +20,7 @@
 // --- Pins ---
 // Trinket Pro pins off-limits: 2, 7
 const int SMD_LED_PIN = 13;
-const int BUTTON_LED_PIN = 4;
+const int BUTTON_LED_PIN = 3;
 const int BUTTON_PIN = 5;
 const int NEOPIXEL_PIN = 6;
 
@@ -167,20 +167,23 @@ void standby() {
     debugPrint("Starting standby.");
     lightButton(true);
 
-    int frequency = 10;
+    const int frequency = 10;
+    const int maxButtonBrightness = 255;
+    const int maxStripBrightness = 255;
+
     int startTime = millis();
     int lastTime = startTime;
     SineEase ease;
 
     // The duration is half of the cycle (e.g., dark to light), so the full
     // cycle (e.g. dark to light to dark again) takes twice as long.
-    ease.setDuration(2500); // half cycle in milliseconds
+    ease.setDuration(2000); // half cycle in milliseconds
 
     // The total change in position controls the maximum brightness of the
     // NeoPixels. Because the NeoPixels have a range of 255 to 0, a total
     // change in position less than about 1/3rd the total brightness makes the
     // stops between values obvious as a sort of stutter in the animation.
-    ease.setTotalChangeInPosition(255/3);
+    ease.setTotalChangeInPosition(1.0);
 
     double easedPosition;
 
@@ -188,7 +191,14 @@ void standby() {
         if (millis() - lastTime > frequency) { // min change frequency is 10ms
             lastTime = millis();
             easedPosition = ease.easeInOut((double)(lastTime - startTime));
-            setStrip(strip.Color(0, (int)easedPosition, 0));
+
+            setStrip(strip.Color(0,
+                                 (int)(easedPosition * maxStripBrightness),
+                                 0));
+            analogWrite(BUTTON_LED_PIN,
+                        (int)((1.0 - easedPosition) * maxButtonBrightness));
+
+            debugPrint(easedPosition);
         }
 
         if (isButtonPressed()) {
