@@ -231,7 +231,6 @@ void setup() {
     // Neopixel
     strip.begin();
     strip.show();
-    setStrip(WHITE);
 }
 
 
