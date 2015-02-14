@@ -23,6 +23,8 @@ const int SMD_LED_PIN = 13;
 const int BUTTON_LED_PIN = 3;
 const int BUTTON_PIN = 5;
 const int NEOPIXEL_PIN = 6;
+const int AUTOFOCUS_PIN = 10;
+const int SHUTTER_PIN = 11;
 
 
 // ========
@@ -223,6 +225,8 @@ void setup() {
     // Pin modes
     pinMode(BUTTON_LED_PIN, OUTPUT);
     pinMode(BUTTON_PIN, INPUT);
+    pinMode(AUTOFOCUS_PIN, OUTPUT);
+    pinMode(SHUTTER_PIN, OUTPUT);
 
     // LED states
     lightButton(true);
