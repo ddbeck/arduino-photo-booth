@@ -96,6 +96,17 @@ bool isButtonPressed() {
     return firstRead && secondRead;
 }
 
+
+void autofocus(bool on) {
+    digitalWrite(AUTOFOCUS_PIN, on ? HIGH : LOW);
+}
+
+
+void shutter(bool on) {
+    digitalWrite(SHUTTER_PIN, on ? HIGH : LOW);
+}
+
+
 // =========
 // Animation
 // =========
