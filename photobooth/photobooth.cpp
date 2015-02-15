@@ -65,6 +65,12 @@ void lightButton(bool on) {
 }
 
 
+void lightButton(int brightness) {
+    analogWrite(BUTTON_LED_PIN, brightness);
+    // debugPrint(String("Setting arcade button to ") + (brightness / 255) + "%");
+}
+
+
 void lightSMD(bool on) {
     lightLED(on, SMD_LED_PIN, "SMD");
 }
@@ -197,10 +203,7 @@ void standby() {
             setStrip(strip.Color(0,
                                  (int)(easedPosition * maxStripBrightness),
                                  0));
-            analogWrite(BUTTON_LED_PIN,
-                        (int)((1.0 - easedPosition) * maxButtonBrightness));
-
-            debugPrint(easedPosition);
+            lightButton((int)((1.0 - easedPosition) * maxButtonBrightness));
         }
 
         if (isButtonPressed()) {
