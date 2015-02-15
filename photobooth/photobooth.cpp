@@ -107,30 +107,31 @@ void shutter(bool on) {
 }
 
 
-// =========
-// Animation
-// =========
-typedef struct PixelBarState {
+// ======================
+// Lights, Camera, Action
+// ======================
+typedef struct CountdownState {
     int duration;
     int pixels;
     uint32_t color;
-} PixelBarState;
+    String command;
+} CountdownState;
 
-PixelBarState animation[10] = {
+CountdownState countdownStates[10] = {
     {750, 16, GREEN},
     {750, 14, GREEN},
     {750, 12, GREEN},
     {750, 10, YELLOW},
     {750, 8, YELLOW},
     {750, 6, YELLOW},
-    {750, 4, RED},
-    {750, 2, RED},
-    {10, 16, FLASH},
-    {0, 16, OFF}
+    {750, 4, RED, "AUTOFOCUS_ON"},
+    {750, 2, RED, "AUTOFOCUS_OFF"},
+    {10, 16, FLASH, "SHUTTER_ON"},
+    {0, 16, OFF, "SHUTTER_OFF"},
 };
 
 
-void setPixelBarState(PixelBarState state) {
+void setCountdownState(CountdownState state) {
     int pixelCount = strip.numPixels();
 
     int offset = (pixelCount - state.pixels) / 2;
@@ -154,26 +155,52 @@ void setPixelBarState(PixelBarState state) {
 }
 
 
+// ==============
+// Intervalometer
+// ==============
+
+
+void controlCamera(String command) {
+    if (String("AUTOFOCUS_ON") == command) {
+        autofocus(true);
+    }
+    else if (String("AUTOFOCUS_OFF") == command) {
+        autofocus(false);
+    }
+    else if (String("SHUTTER_ON") == command) {
+        shutter(true);
+    }
+    else if (String("SHUTTER_OFF") == command) {
+        shutter(false);
+    }
+    else {
+        debugPrint("ERROR: unrecognized camera command.");
+    }
+}
+
+
 void countdown() {
     debugPrint("Starting countdown.");
 
-    int animationStep = 0;
+    int countdownStep = 0;
     int stepStartTime = millis();
     int readTime = stepStartTime;
 
-    while (animationStep < sizeof(animation) / sizeof(PixelBarState)) {
-        debugPrint(String("Animating index ") + animationStep);
+    while (countdownStep < sizeof(countdownStates) / sizeof(CountdownState)) {
+        debugPrint(String("Animating index ") + countdownStep);
 
-        setPixelBarState(animation[animationStep]);
+        setCountdownState(countdownStates[countdownStep]);
         stepStartTime = millis();
+
+        controlCamera(countdownStates[countdownStep].command);
 
         while (true) {
             readTime = millis();
-            if (readTime - stepStartTime >= animation[animationStep].duration) {
-                debugPrint(String("Finished index ") + animationStep +
+            if (readTime - stepStartTime >= countdownStates[countdownStep].duration) {
+                debugPrint(String("Finished index ") + countdownStep +
                     String(" after ") + (readTime - stepStartTime) +
                     String("ms."));
-                animationStep++;
+                countdownStep++;
                 break;
             }
         }
