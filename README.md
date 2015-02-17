@@ -2,12 +2,9 @@
 
 This is the source for a photo booth driven by an Arduino-based intervalometer connected to a Canon EOS 350D camera.
 
+# Dependencies
 
-# Usage
-
-Upload the sketch to your Arduino Uno or compatible micro controller (see [the official Arduino IDE documentation](http://arduino.cc/en/Guide/HomePage) for detailed instructions).
-
-This project assumes the following components:
+This project assumes the following hardware components:
 
 Pin | Component
 --- | ---------
@@ -19,6 +16,14 @@ Pin | Component
 
 Digital pin 13 is also used for controlling the built-in surface mount LED on the Arduino Uno. The LED is used for debugging purposes, and is not required for normal operation.
 
+The sketch requires the following libraries:
+
+* [Adafruit NeoPixel Arduino library](https://learn.adafruit.com/adafruit-neopixel-uberguide/arduino-library)
+* [Andy Brown's Arduino easing library](http://andybrown.me.uk/wk/2010/12/05/animation-on-the-arduino-with-easing-functions/)
+
+# Usage
+
+Upload the sketch to your Arduino Uno or compatible micro controller (see [the official Arduino IDE documentation](http://arduino.cc/en/Guide/HomePage) for detailed instructions).
 
 # License
 
