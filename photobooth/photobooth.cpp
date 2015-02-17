@@ -67,7 +67,6 @@ void lightButton(bool on) {
 
 void lightButton(int brightness) {
     analogWrite(BUTTON_LED_PIN, brightness);
-    // debugPrint(String("Setting arcade button to ") + (brightness / 255) + "%");
 }
 
 
