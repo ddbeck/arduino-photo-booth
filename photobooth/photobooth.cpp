@@ -123,11 +123,11 @@ CountdownState countdownStates[10] = {
     {750, 12, GREEN},
     {750, 10, YELLOW},
     {750, 8, YELLOW},
-    {750, 6, YELLOW},
-    {750, 4, RED, "AUTOFOCUS_ON"},
-    {750, 2, RED, "AUTOFOCUS_OFF"},
+    {750, 6, YELLOW, "AUTOFOCUS_ON"},
+    {750, 4, RED},
+    {750, 2, RED},
     {10, 16, FLASH, "SHUTTER_ON"},
-    {0, 16, OFF, "SHUTTER_OFF"},
+    {10, 16, OFF, "ALL_OFF"},
 };
 
 
@@ -172,6 +172,10 @@ void controlCamera(String command) {
     }
     else if (String("SHUTTER_OFF") == command) {
         shutter(false);
+    }
+    else if (String("ALL_OFF") == command) {
+        shutter(false);
+        autofocus(false);
     }
     else {
         debugPrint("ERROR: unrecognized camera command.");
@@ -282,5 +286,4 @@ void setup() {
 void loop() {
     standby();
     countdown();
-    delay(1000);
 }
