@@ -2,6 +2,10 @@
 
 This is the source for a photo booth driven by an Arduino-based intervalometer connected to a Canon EOS 350D camera.
 
+Here's a simplified illustration:
+
+![a Fritzing illustration of the circuit on a breadboard](breadboard.png)
+
 # Dependencies
 
 This project assumes the following hardware components:
