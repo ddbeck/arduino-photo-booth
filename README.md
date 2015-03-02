@@ -13,7 +13,7 @@ This project assumes the following hardware components:
 Pin | Component
 --- | ---------
 3   | LED
-5   | [Arcade button microswitch](http://www.adafruit.com/products/1188), normally open
+4   | [Arcade button microswitch](http://www.adafruit.com/products/1188), normally open
 6   | Two chained [Adafruit NeoPixel Sticks](http://www.adafruit.com/products/1426)
 10  | A single-channel [optoisolator](https://www.sparkfun.com/products/314) (autofocus)
 11  | A single-channel optoisolator (shutter)
