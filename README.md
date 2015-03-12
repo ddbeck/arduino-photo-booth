@@ -6,6 +6,10 @@ Here's a simplified illustration:
 
 ![a Fritzing illustration of the circuit on a breadboard](breadboard.png)
 
+Here's the circuit as assembled on a prototyping board:
+
+![a photo of the assembled circuit](circuitboard.jpeg)
+
 # Dependencies
 
 This project assumes the following hardware components:
