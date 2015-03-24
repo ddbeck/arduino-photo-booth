@@ -10,6 +10,10 @@ Here's the circuit as assembled on a prototyping board:
 
 ![a photo of the assembled circuit](circuitboard.jpeg)
 
+And here's the final product:
+
+![a photo of the components in an enclosure](assembled.jpeg)
+
 # Dependencies
 
 This project assumes the following hardware components:
