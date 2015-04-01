@@ -215,18 +215,19 @@ void countdown() {
 void standby() {
     debugPrint("Starting standby.");
     lightButton(true);
+    setStrip(GREEN);
 
-    const int frequency = 10;
     const int maxButtonBrightness = 255;
-    const int maxStripBrightness = 255;
+    const int maxStripBrightness = 30;
 
+    int duration = 1500;
     int startTime = millis();
-    int lastTime = startTime;
+    int lastTimeButton = startTime;
     SineEase ease;
 
     // The duration is half of the cycle (e.g., dark to light), so the full
     // cycle (e.g. dark to light to dark again) takes twice as long.
-    ease.setDuration(2000); // half cycle in milliseconds
+    ease.setDuration(duration); // half cycle in milliseconds
 
     // The total change in position controls the maximum brightness of the
     // NeoPixels. Because the NeoPixels have a range of 255 to 0, a total
@@ -237,14 +238,14 @@ void standby() {
     double easedPosition;
 
     while (true) {
-        if (millis() - lastTime > frequency) { // min change frequency is 10ms
-            lastTime = millis();
-            easedPosition = ease.easeInOut((double)(lastTime - startTime));
+        if (millis() - lastTimeButton > 10) { // min change frequency is 10ms
+            lastTimeButton = millis();
+            easedPosition = ease.easeInOut((double)(lastTimeButton - startTime));
+            lightButton((int)(easedPosition * maxButtonBrightness));
 
-            setStrip(strip.Color(0,
-                                 (int)(easedPosition * maxStripBrightness),
-                                 0));
-            lightButton((int)((1.0 - easedPosition) * maxButtonBrightness));
+            if (lastTimeButton - startTime >= duration * 2) {
+                startTime = millis();
+            }
         }
 
         if (isButtonPressed()) {
