@@ -1,18 +1,17 @@
 # Arduino Photo Booth
 
-This is the source for a photo booth driven by an Arduino-based intervalometer connected to a Canon EOS 350D camera.
+![a photo of the components in an enclosure](assembled.jpeg)
 
-Here's a simplified illustration:
+This repository contains the source for a photo booth driven by an Arduino-based intervalometer connected to a Canon EOS 350D camera. I put together this project for my friends' wedding reception in March 2015, in lieu of them renting a hugely expensive photo booth from a vendor. Instead of using a photo printer, I used [an eyefi Wi-Fi SD card](http://www.eyefi.com/) to automatically upload photos to flickr, so photo booth users could see their work on their smartphones soon after taking a photo.
+
+Here's an illustration of the circuit:
 
 ![a Fritzing illustration of the circuit on a breadboard](breadboard.png)
 
-Here's the circuit as assembled on a prototyping board:
+And here's the circuit as assembled on a prototyping board:
 
 ![a photo of the assembled circuit](circuitboard.jpeg)
 
-And here's the final product:
-
-![a photo of the components in an enclosure](assembled.jpeg)
 
 # Dependencies
 
